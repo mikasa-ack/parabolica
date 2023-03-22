@@ -1,24 +1,29 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
 #[ink::contract]
-mod racerOne {
+mod racecar {
     use ink::prelude::string::String;
-    use racer::Move;
+    use traits::{
+        Racer,
+        Move,
+    };
 
     #[ink(storage)]
-    pub struct RacerOne {
+    pub struct Racecar {
         name: String,
     }
 
-    impl RacerOne {
+    impl Racecar {
         #[ink(constructor)]
         pub fn new(name: String) -> Self {
             Self { name }
         }
+    }
 
+    impl Racer for Racecar {
         #[ink(message)]
         pub fn take_turn(&mut self, track: Vec<Vec<bool>>, carIndex: u64) -> Move {
-            self.value = !self.value;
+            Move::FireShell
         }
     }
 }

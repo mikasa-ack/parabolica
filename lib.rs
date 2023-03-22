@@ -32,10 +32,9 @@ mod parabolica {
 
         #[ink(message)]
         pub fn lap(&mut self) {
+            assert_eq!(self.racers.len(), 3);
+
             self.current_lap = self.current_lap + 1;
-            if self.racers.len() != 3 {
-                return;
-            }
             let next_track = self.track.clone();
             //[[Empty, Empty, Empty], [Empty, Empty, Empty]
             for row in 0..self.track.len() {
@@ -66,6 +65,8 @@ mod parabolica {
 
         #[ink(message)]
         pub fn register_racer(&mut self, racer: AccountId) {
+            assert!(self.racers.len() < 3);
+            
             let mut new_racers = self.racers.clone();
             new_racers.push(racer);
             self.racers = new_racers;
