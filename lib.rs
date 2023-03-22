@@ -10,6 +10,8 @@ mod parabolica {
         players: Vec<AccountId>,
         length: u64,
         track: Vec<Vec<bool>>,
+        current_lap: u64,
+        manual_kill: bool,
     }
 
     impl Parabolica {
@@ -20,6 +22,8 @@ mod parabolica {
                 players: Vec::new(),
                 length: laps,
                 track: init_track,
+                current_lap: 0,
+                manual_kill: false,
             }
         }
 
@@ -30,6 +34,21 @@ mod parabolica {
             // calculate the ELO of each racer for this round
             // advance accordingly
             self.track = next_track;
+        }
+
+        /// Returns `true` if the autonomous call should be executed.
+        #[ink(message)]
+        pub fn should_run(&self) -> bool {
+            !self.manual_stop
+
+            if self.current_lap > length {
+                return false
+            }
+        }
+
+        #[ink(message)]
+        pub fn should_kill(&self) -> bool {
+            self.manual_kill
         }
 
         #[ink(message)]
