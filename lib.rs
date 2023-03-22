@@ -35,14 +35,14 @@ mod parabolica {
             assert_eq!(self.racers.len(), 3);
 
             self.current_lap = self.current_lap + 1;
-            let next_track = self.track.clone();
+            let mut next_track = self.track.clone();
             //[[Empty, Empty, Empty], [Empty, Empty, Empty]
             for row in 0..self.track.len() {
                 for col in 0..self.track[0].len() {
                     //AccountId of racer
-                    let track_view = self.track.clone();
-                    let racer_move = self.racers[col].take_turn(track_view, col);
-                    next_track[row][col] = racer_move;
+                    // let track_view = self.track.clone();
+                    // let racer_move = self.racers[col].take_turn(track_view, col);
+                    next_track[row][col] = Move::FireShell;
                 }
             }
 
@@ -66,7 +66,7 @@ mod parabolica {
         #[ink(message)]
         pub fn register_racer(&mut self, racer: AccountId) {
             assert!(self.racers.len() < 3);
-            
+
             let mut new_racers = self.racers.clone();
             new_racers.push(racer);
             self.racers = new_racers;

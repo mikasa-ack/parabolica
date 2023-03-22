@@ -2,6 +2,7 @@
 
 #[ink::contract]
 mod racecar {
+    use ink::prelude::vec::Vec;
     use ink::prelude::string::String;
     use traits::{
         Racer,
@@ -22,8 +23,12 @@ mod racecar {
 
     impl Racer for Racecar {
         #[ink(message)]
-        pub fn take_turn(&mut self, track: Vec<Vec<bool>>, carIndex: u64) -> Move {
-            Move::FireShell
+        fn take_turn(&mut self, track: Vec<Vec<Move>>, car_index: u64) -> Move {
+            if car_index % 2 == 0 {
+                Move::FireShell
+            } else {
+                Move::Accelerate
+            }
         }
     }
 }
