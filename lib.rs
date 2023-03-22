@@ -29,6 +29,10 @@ mod parabolica {
 
         #[ink(message)]
         pub fn lap(&mut self) {
+            if self.players.len() != 3 {
+                return;
+            }
+
             let next_track = self.track.clone();
 
             // calculate the ELO of each racer for this round
@@ -39,16 +43,27 @@ mod parabolica {
         /// Returns `true` if the autonomous call should be executed.
         #[ink(message)]
         pub fn should_run(&self) -> bool {
-            !self.manual_stop
-
-            if self.current_lap > length {
-                return false
+            if self.current_lap > self.length {
+                return false;
             }
+            !self.manual_kill
         }
 
         #[ink(message)]
         pub fn should_kill(&self) -> bool {
             self.manual_kill
+        }
+
+        #[ink(message)]
+        pub fn register_racer(&self, racer: AccountId) {
+            let players = self.players;
+            players.append(racer);
+            self.players = players;
+        }
+
+        #[ink(message)]
+        pub fn set_manual_kill(&mut self) {
+            self.manual_kill = true;
         }
 
         #[ink(message)]
