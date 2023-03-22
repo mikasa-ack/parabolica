@@ -29,6 +29,7 @@ mod parabolica {
 
         #[ink(message)]
         pub fn lap(&mut self) {
+            self.current_lap = self.current_lap + 1;
             if self.racers.len() != 3 {
                 return;
             }
@@ -43,9 +44,9 @@ mod parabolica {
         /// Returns `true` if the autonomous call should be executed.
         #[ink(message)]
         pub fn should_run(&self) -> bool {
-            if self.current_lap > self.length {
-                return false;
-            }
+            // if self.current_lap > self.length {
+            //     return false;
+            // }
             !self.manual_kill
         }
 
@@ -69,6 +70,11 @@ mod parabolica {
         #[ink(message)]
         pub fn get_num_racers(&self) -> u64 {
             self.racers.len() as u64
+        }
+
+        #[ink(message)]
+        pub fn get_curr_lap(&self) -> u64 {
+            self.current_lap
         }
 
         #[ink(message)]
