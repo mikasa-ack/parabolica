@@ -3,12 +3,11 @@
 pub use self::racecar::{
     Racecar,
     RacecarRef,
-}
+};
 
 #[ink::contract]
 mod racecar {
     use ink::prelude::vec::Vec;
-    use ink::prelude::string::String;
     use traits::{
         Racer,
         Move,
