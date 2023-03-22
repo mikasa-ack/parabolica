@@ -66,14 +66,15 @@ mod parabolica {
         }
 
         #[ink(message)]
-        pub fn register_racer(&mut self, racer_hash: Hash, racer_number: u64) {
-            if self.racers.len() >= 3 {
+        pub fn register_racer(&mut self, racer_hash: Hash) {
+            let n_racers = self.racers.len();
+            if n_racers >= 3 {
                 return;
             }
-            let total_balance = Self::env().balance();
-            let racer = RacecarRef::new(racer_number)
+
+            let racer = RacecarRef::new(n_racers as u8)
                 .code_hash(racer_hash)
-                .endowment(total_balance/4)
+                .endowment(0)
                 .salt_bytes([0xDE, 0xAD, 0xBE, 0xEF])
                 .instantiate();
 
