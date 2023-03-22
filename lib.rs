@@ -4,11 +4,12 @@
 mod parabolica {
     use ink::prelude::vec;
     use ink::prelude::vec::Vec;
-    use traits::Move;
+    use traits::{Move, Racer};
+    use racecar::RacecarRef;
 
     #[ink(storage)]
     pub struct Parabolica {
-        racers: Vec<AccountId>,
+        racers: Vec<RacecarRef>,
         length: u64,
         track: Vec<Vec<Move>>,
         coins: u64,
@@ -32,17 +33,18 @@ mod parabolica {
 
         #[ink(message)]
         pub fn lap(&mut self) {
-            assert_eq!(self.racers.len(), 3);
+            if self.racers.len() != 3 {
+                return;
+            }
 
             self.current_lap = self.current_lap + 1;
             let mut next_track = self.track.clone();
             //[[Empty, Empty, Empty], [Empty, Empty, Empty]
             for row in 0..self.track.len() {
                 for col in 0..self.track[0].len() {
-                    //AccountId of racer
-                    // let track_view = self.track.clone();
-                    // let racer_move = self.racers[col].take_turn(track_view, col);
-                    next_track[row][col] = Move::FireShell;
+                    let track_view = self.track.clone();
+                    let racer_move = self.racers[col].take_turn(track_view, col as u64);
+                    next_track[row][col] = racer_move;
                 }
             }
 
@@ -64,8 +66,16 @@ mod parabolica {
         }
 
         #[ink(message)]
-        pub fn register_racer(&mut self, racer: AccountId) {
-            assert!(self.racers.len() < 3);
+        pub fn register_racer(&mut self, racer_hash: Hash, racer_number: u64) {
+            if self.racers.len() >= 3 {
+                return;
+            }
+            let total_balance = Self::env().balance();
+            let racer = RacecarRef::new(racer_number)
+                .code_hash(racer_hash)
+                .endowment(total_balance/4)
+                .salt_bytes([0xDE, 0xAD, 0xBE, 0xEF])
+                .instantiate();
 
             let mut new_racers = self.racers.clone();
             new_racers.push(racer);

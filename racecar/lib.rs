@@ -1,5 +1,10 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
+pub use self::racecar::{
+    Racecar,
+    RacecarRef,
+};
+
 #[ink::contract]
 mod racecar {
     use ink::prelude::string::String;
