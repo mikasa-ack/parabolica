@@ -4,12 +4,13 @@
 mod parabolica {
     use ink::prelude::vec;
     use ink::prelude::vec::Vec;
+    use traits::Move;
 
     #[ink(storage)]
     pub struct Parabolica {
         racers: Vec<AccountId>,
         length: u64,
-        track: Vec<Vec<bool>>,
+        track: Vec<Vec<Move>>,
         coins: u64,
         current_lap: u64,
         manual_kill: bool,
@@ -18,12 +19,12 @@ mod parabolica {
     impl Parabolica {
         #[ink(constructor)]
         pub fn new(racers: u64, laps: u64) -> Self {
-            let init_track: Vec<Vec<bool>> = vec![vec![false; racers as usize]; laps as usize];
+            let init_track: Vec<Vec<Move>> = vec![vec![Move::Empty; racers as usize]; laps as usize];
             Self {
                 racers: Vec::new(),
                 length: laps,
                 track: init_track,
-                coins: 10000,
+                coins: 30000,
                 current_lap: 0,
                 manual_kill: false,
             }
@@ -31,15 +32,15 @@ mod parabolica {
 
         #[ink(message)]
         pub fn lap(&mut self) {
-            self.current_lap = self.current_lap + 1;
             if self.racers.len() != 3 {
                 return;
             }
-
             let next_track = self.track.clone();
+            // for row in 0..self.track.len() {
+            //     for col
+            // }
+            //[false, false, false], [false, false, false]...]
 
-            // calculate the ELO of each racer for this round
-            // advance accordingly
             self.track = next_track;
         }
 
@@ -80,13 +81,8 @@ mod parabolica {
         }
 
         #[ink(message)]
-        pub fn get_track(&self) -> Vec<Vec<bool>> {
+        pub fn get_track(&self) -> Vec<Vec<Move>> {
             self.track.clone()
-        }
-
-        pub fn calculate_elo(&self) -> u64 {
-            // inner function for ELO calc
-            42
         }
     }
 }
