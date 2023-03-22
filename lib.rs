@@ -4,7 +4,7 @@
 mod parabolica {
     use ink::prelude::vec;
     use ink::prelude::vec::Vec;
-    use traits::Move;
+    use traits::{Move, Racer};
     use racecar::RacecarRef;
 
     #[ink(storage)]
@@ -40,10 +40,9 @@ mod parabolica {
             //[[Empty, Empty, Empty], [Empty, Empty, Empty]
             for row in 0..self.track.len() {
                 for col in 0..self.track[0].len() {
-                    //AccountId of racer
-                    // let track_view = self.track.clone();
-                    // let racer_move = self.racers[col].take_turn(track_view, col);
-                    next_track[row][col] = Move::FireShell;
+                    let track_view = self.track.clone();
+                    let racer_move = self.racers[col].take_turn(track_view, col as u64);
+                    next_track[row][col] = racer_move;
                 }
             }
 
