@@ -2,43 +2,44 @@
 
 #[ink::contract]
 mod parabolica {
+    use ink::prelude::vec;
+    use ink::prelude::vec::Vec;
 
-    /// Defines the storage of your contract.
-    /// Add new fields to the below struct in order
-    /// to add new static storage fields to your contract.
     #[ink(storage)]
     pub struct Parabolica {
-        /// Stores a single `bool` value on the storage.
-        value: bool,
+        players: Vec<AccountId>,
+        length: u64,
+        track: Vec<Vec<bool>>,
     }
 
     impl Parabolica {
-        /// Constructor that initializes the `bool` value to the given `init_value`.
         #[ink(constructor)]
-        pub fn new(init_value: bool) -> Self {
-            Self { value: init_value }
+        pub fn new(players: u64, laps: u64) -> Self {
+            let init_track: Vec<Vec<bool>> = vec![vec![false; players as usize]; laps as usize];
+            Self {
+                players: Vec::new(),
+                length: laps,
+                track: init_track,
+            }
         }
 
-        /// Constructor that initializes the `bool` value to `false`.
-        ///
-        /// Constructors can delegate to other constructors.
-        #[ink(constructor)]
-        pub fn default() -> Self {
-            Self::new(Default::default())
-        }
-
-        /// A message that can be called on instantiated contracts.
-        /// This one flips the value of the stored `bool` from `true`
-        /// to `false` and vice versa.
         #[ink(message)]
-        pub fn flip(&mut self) {
-            self.value = !self.value;
+        pub fn lap(&mut self) {
+            let next_track = self.track.clone();
+
+            // calculate the ELO of each racer for this round
+            // advance accordingly
+            self.track = next_track;
         }
 
-        /// Simply returns the current value of our `bool`.
         #[ink(message)]
-        pub fn get(&self) -> bool {
-            self.value
+        pub fn get(&self) -> Vec<Vec<bool>> {
+            self.track.clone()
+        }
+
+        pub fn calculate_elo(&self) -> u64 {
+            // inner function for ELO calc
+            42
         }
     }
 }
