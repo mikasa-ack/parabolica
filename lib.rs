@@ -9,7 +9,7 @@ mod parabolica {
 
     #[ink(storage)]
     pub struct Parabolica {
-        racers: Vec<AccountId>,
+        racers: Vec<RacecarRef>,
         length: u64,
         track: Vec<Vec<Move>>,
         coins: u64,
@@ -65,8 +65,14 @@ mod parabolica {
         }
 
         #[ink(message)]
-        pub fn register_racer(&mut self, racer: AccountId) {
+        pub fn register_racer(&mut self, racer_hash: Hash, racer_number: u64) {
             assert!(self.racers.len() < 3);
+            let total_balance = Self::env().balance();
+            let racer = RacecarRef::new(racer_number)
+                .code_hash(racer_hash)
+                .endowment(total_balance/4)
+                .salt_bytes([0xDE, 0xAD, 0xBE, 0xEF])
+                .instantiate();
 
             let mut new_racers = self.racers.clone();
             new_racers.push(racer);
