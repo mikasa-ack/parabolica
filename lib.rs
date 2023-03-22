@@ -5,6 +5,7 @@ mod parabolica {
     use ink::prelude::vec;
     use ink::prelude::vec::Vec;
     use traits::Move;
+    use racecar:RacecarRef;
 
     #[ink(storage)]
     pub struct Parabolica {
