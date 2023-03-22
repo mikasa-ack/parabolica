@@ -10,6 +10,7 @@ mod parabolica {
         racers: Vec<AccountId>,
         length: u64,
         track: Vec<Vec<bool>>,
+        coins: u64,
         current_lap: u64,
         manual_kill: bool,
     }
@@ -22,6 +23,7 @@ mod parabolica {
                 racers: Vec::new(),
                 length: laps,
                 track: init_track,
+                coins: 10000,
                 current_lap: 0,
                 manual_kill: false,
             }
