@@ -33,7 +33,9 @@ mod parabolica {
 
         #[ink(message)]
         pub fn lap(&mut self) {
-            assert_eq!(self.racers.len(), 3);
+            if self.racers.len() != 3 {
+                return;
+            }
 
             self.current_lap = self.current_lap + 1;
             let mut next_track = self.track.clone();
@@ -65,7 +67,9 @@ mod parabolica {
 
         #[ink(message)]
         pub fn register_racer(&mut self, racer_hash: Hash, racer_number: u64) {
-            assert!(self.racers.len() < 3);
+            if self.racers.len() >= 3 {
+                return;
+            }
             let total_balance = Self::env().balance();
             let racer = RacecarRef::new(racer_number)
                 .code_hash(racer_hash)
