@@ -11,12 +11,12 @@ mod racecar {
 
     #[ink(storage)]
     pub struct Racecar {
-        name: String,
+        name: u64,
     }
 
     impl Racecar {
         #[ink(constructor)]
-        pub fn new(name: String) -> Self {
+        pub fn new(name: u64) -> Self {
             Self { name }
         }
     }

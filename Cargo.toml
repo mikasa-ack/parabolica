@@ -9,6 +9,7 @@ ink = { version = "4.0.1", default-features = false }
 
 scale = { package = "parity-scale-codec", version = "3", default-features = false, features = ["derive"] }
 scale-info = { version = "2.3", default-features = false, features = ["derive"], optional = true }
+racecar = { path = "./racecar", default-features = false, features = ["ink-as-dependency"]}
 traits = { path = "./traits", default-features = false }
 
 [dev-dependencies]
@@ -24,6 +25,7 @@ std = [
     "scale/std",
     "scale-info/std",
     "traits/std",
+    "racecar/std"
 ]
 ink-as-dependency = []
 e2e-tests = []
