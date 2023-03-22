@@ -7,20 +7,18 @@ pub use self::racecar::{
 
 #[ink::contract]
 mod racecar {
+    use ink::prelude::string::String;
     use ink::prelude::vec::Vec;
-    use traits::{
-        Racer,
-        Move,
-    };
+    use traits::{Move, Racer};
 
     #[ink(storage)]
     pub struct Racecar {
-        name: u64,
+        name: u8,
     }
 
     impl Racecar {
         #[ink(constructor)]
-        pub fn new(name: u64) -> Self {
+        pub fn new(name: u8) -> Self {
             Self { name }
         }
     }
