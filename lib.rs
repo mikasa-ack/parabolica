@@ -36,16 +36,14 @@ mod parabolica {
             if self.racers.len() != 3 {
                 return;
             }
-
-            self.current_lap = self.current_lap + 1;
+            let curr_lap = self.current_lap + 1;
+            self.current_lap = curr_lap;
             let mut next_track = self.track.clone();
             //[[Empty, Empty, Empty], [Empty, Empty, Empty]
-            for row in 0..self.track.len() {
-                for col in 0..self.track[0].len() {
-                    let track_view = self.track.clone();
-                    let racer_move = self.racers[col].take_turn(track_view, col as u64);
-                    next_track[row][col] = racer_move;
-                }
+            for racer in 0..self.track[curr_lap as usize].len() {
+                let track_view = self.track.clone();
+                let racer_move = self.racers[racer].take_turn(track_view, racer as u64);
+                next_track[curr_lap as usize][racer] = racer_move;
             }
 
             self.track = next_track;

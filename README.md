@@ -23,3 +23,16 @@ Racers will be called to take turns making moves on racetrack:
 - Cut off
   - increases car's speed by however many units it was called with
   - car's speed never decreases except when it is hit w/ a shell
+
+## Install
+
+init mikasa node
+`cargo run --release -- --dev`
+
+deploy parabolica
+`./scripts/deploy.sh`
+
+register the `lap` function in the UI
+
+query the race track
+`./scripts/query.sh`

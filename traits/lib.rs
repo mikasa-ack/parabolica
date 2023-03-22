@@ -3,7 +3,10 @@
 use ink::prelude::vec::Vec;
 
 #[derive(Debug, PartialEq, Eq, Clone, scale::Encode, scale::Decode)]
-#[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+#[cfg_attr(
+    feature = "std",
+    derive(ink::storage::traits::StorageLayout, scale_info::TypeInfo)
+)]
 pub enum Move {
     Accelerate,
     FireShell,
