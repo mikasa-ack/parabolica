@@ -21,8 +21,9 @@ echo "should_kill: 0x44e091c7"
 
 # Build racer contract
 cargo contract build --manifest-path racecar/Cargo.toml
-racer_hash=$(cargo contract upload --manifest-path racecar/Cargo.toml --suri //Alice --execute | grep -i "Code hash" | awk '{print $3}')
+racer_hash=$(cargo contract upload --manifest-path racecar/Cargo.toml --suri //Alice --execute | grep -i "Code hash" | awk '{print $3}') 
 echo $racer_hash | tr -d '"' > $cache_dir/racer_hash
+TRIMMER_RACER_HASH=$(cat $cache_dir/racer_hash)
 
 # # Deploy racer 1
 # echo "Deploying racer 1..."
@@ -51,15 +52,15 @@ main_contract_address=$(cat $cache_dir/contract_address)
 
 # Racer 1
 echo "Registering racer 1..."
-cargo contract call --suri //Alice --contract $main_contract_address --message register_racer --args $racer_hash --execute --skip-confirm
+cargo contract call --suri //Alice --contract $main_contract_address --message register_racer --args $TRIMMER_RACER_HASH --execute --skip-confirm
 
 # Racer 2
 echo "Registering racer 2..."
-cargo contract call --suri //Alice --contract $main_contract_address --message register_racer --args $racer_hash --execute --skip-confirm
+cargo contract call --suri //Alice --contract $main_contract_address --message register_racer --args $TRIMMER_RACER_HASH --execute --skip-confirm
 
 # Racer 3
 echo "Registering racer 3..."
-cargo contract call --suri //Alice --contract $main_contract_address --message register_racer --args $racer_hash --execute --skip-confirm
+cargo contract call --suri //Alice --contract $main_contract_address --message register_racer --args $TRIMMER_RACER_HASH --execute --skip-confirm
 
 echo "Querying number of registered racers..."
 cargo contract call --contract $main_contract_address --suri //Alice --message get_num_racers --output-json | jq .data.Tuple.values
