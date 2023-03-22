@@ -7,7 +7,7 @@ mod parabolica {
 
     #[ink(storage)]
     pub struct Parabolica {
-        players: Vec<AccountId>,
+        racers: Vec<AccountId>,
         length: u64,
         track: Vec<Vec<bool>>,
         current_lap: u64,
@@ -16,10 +16,10 @@ mod parabolica {
 
     impl Parabolica {
         #[ink(constructor)]
-        pub fn new(players: u64, laps: u64) -> Self {
-            let init_track: Vec<Vec<bool>> = vec![vec![false; players as usize]; laps as usize];
+        pub fn new(racers: u64, laps: u64) -> Self {
+            let init_track: Vec<Vec<bool>> = vec![vec![false; racers as usize]; laps as usize];
             Self {
-                players: Vec::new(),
+                racers: Vec::new(),
                 length: laps,
                 track: init_track,
                 current_lap: 0,
@@ -29,7 +29,7 @@ mod parabolica {
 
         #[ink(message)]
         pub fn lap(&mut self) {
-            if self.players.len() != 3 {
+            if self.racers.len() != 3 {
                 return;
             }
 
@@ -55,10 +55,10 @@ mod parabolica {
         }
 
         #[ink(message)]
-        pub fn register_racer(&self, racer: AccountId) {
-            let players = self.players;
-            players.append(racer);
-            self.players = players;
+        pub fn register_racer(&mut self, racer: AccountId) {
+            let mut new_racers = self.racers.clone();
+            new_racers.push(racer);
+            self.racers = new_racers;
         }
 
         #[ink(message)]
@@ -67,7 +67,12 @@ mod parabolica {
         }
 
         #[ink(message)]
-        pub fn get(&self) -> Vec<Vec<bool>> {
+        pub fn get_num_racers(&self) -> u64 {
+            self.racers.len() as u64
+        }
+
+        #[ink(message)]
+        pub fn get_track(&self) -> Vec<Vec<bool>> {
             self.track.clone()
         }
 
