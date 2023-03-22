@@ -32,14 +32,20 @@ mod parabolica {
 
         #[ink(message)]
         pub fn lap(&mut self) {
+            self.current_lap = self.current_lap + 1;
             if self.racers.len() != 3 {
                 return;
             }
             let next_track = self.track.clone();
-            // for row in 0..self.track.len() {
-            //     for col
-            // }
-            //[false, false, false], [false, false, false]...]
+            //[[Empty, Empty, Empty], [Empty, Empty, Empty]
+            for row in 0..self.track.len() {
+                for col in 0..self.track[0].len() {
+                    //AccountId of racer
+                    let track_view = self.track.clone();
+                    let racer_move = self.racers[col].take_turn(track_view, col);
+                    next_track[row][col] = racer_move;
+                }
+            }
 
             self.track = next_track;
         }
@@ -47,9 +53,9 @@ mod parabolica {
         /// Returns `true` if the autonomous call should be executed.
         #[ink(message)]
         pub fn should_run(&self) -> bool {
-            // if self.current_lap > self.length {
-            //     return false;
-            // }
+            if self.current_lap > self.length {
+                return false;
+            }
             !self.manual_kill
         }
 
