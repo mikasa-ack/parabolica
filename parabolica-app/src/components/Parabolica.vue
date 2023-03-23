@@ -46,12 +46,12 @@ export default {
 
 <style scoped>
   .outer {
-    margin: auto;
-    width: 75%;
+    text-align: center;
   }
   .container {
     display: flex;
     flex-direction: row;
+    justify-content: center;
   }
   .racer {
     padding: 7px;
