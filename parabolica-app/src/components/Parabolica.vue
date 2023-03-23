@@ -55,7 +55,7 @@ export default {
   }
   .racer {
     padding: 7px;
-    border: 1px solid lightgrey;
+    border: 1px solid #B3B3B3;
   }
 
   .shell {
