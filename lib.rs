@@ -145,5 +145,9 @@ mod parabolica {
         pub fn get_track(&self) -> Vec<Vec<Move>> {
             self.track.clone()
         }
+        #[ink(message)]
+        pub fn get_positions(&self) -> Vec<u64> {
+            self.racers.iter().map(|racer| racer.y).collect()
+        }
     }
 }
