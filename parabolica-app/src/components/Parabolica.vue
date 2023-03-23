@@ -1,6 +1,8 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <h3>Racers:</h3>
+    <h4 v-for="(racer, i) in racer_positions" :orderBy="racer" :key="i">{{i+1}}: {{racer}}</h4>
     <div  class="container">
       <div class="item" v-for="(lap, index) in track" :key="index">
         <div class="racer" v-for="(racer, jindex) in lap" :key="jindex">
@@ -12,7 +14,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "parabolica-track",
@@ -22,13 +24,12 @@ export default {
   created() {
     setInterval(() => {
       this.$store.dispatch("parabolica/fetchTrack");
+      this.$store.dispatch("parabolica/fetchLap");
+      this.$store.dispatch("parabolica/fetchRacerPositions");
     }, 2000);
   },
   computed: {
-    ...mapGetters("parabolica", ["track"]),
-  },
-  methods: {
-    ...mapActions("parabolica", ["fetchTrack"]),
+    ...mapGetters("parabolica", ["track", "lap_number", "racer_positions"]),
   },
 }
 </script>

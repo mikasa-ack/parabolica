@@ -36,3 +36,11 @@ register the `lap` function in the UI
 
 query the race track
 `./scripts/query.sh`
+
+## Run UI
+
+`cd parabolica-app`
+
+`npm i`
+
+`npm run serve`
