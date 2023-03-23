@@ -10,7 +10,6 @@ use ink::prelude::vec::Vec;
 pub enum Move {
     Accelerate,
     FireShell,
-    CutOff,
     Empty,
 }
 
