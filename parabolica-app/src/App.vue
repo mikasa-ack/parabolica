@@ -1,5 +1,5 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
+  <img alt="parabolica logo" src="./assets/logo.png">
   <Parabolica msg="Parabolica Track"/>
 </template>
 
@@ -9,7 +9,7 @@ import Parabolica from './components/Parabolica.vue'
 export default {
   name: 'App',
   components: {
-    Parabolica
+    Parabolica,
   }
 }
 </script>

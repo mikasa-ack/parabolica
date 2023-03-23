@@ -24,15 +24,17 @@ const actions = {
         let contract = await new ContractPromise(api, metadata, contract_addr);
         const keyring = new Keyring({ type: 'sr25519' });
         const alicePair = keyring.addFromUri('//Alice', { name: 'Alice default' });
-        let track = await contract?.query.get_track(
+        console.log("Contract: ", contract);
+        let raw = await contract.query.getTrack(
             alicePair.address,
             {
-            gasLimit: api?.registry.createType('WeightV2', {
+            gasLimit: api.registry.createType('WeightV2', {
                 refTime: MAX_CALL_WEIGHT,
                 proofSize: PROOFSIZE,
             }),
             storageDepositLimit: undefined,
         });
+        let track = await raw.output.toJSON()["ok"];
         console.log("TRACK: ", track);
         commit("setTrack", track);
     }
