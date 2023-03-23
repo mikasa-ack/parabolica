@@ -16,5 +16,5 @@ pub enum Move {
 #[ink::trait_definition]
 pub trait Racer {
     #[ink(message)]
-    fn take_turn(&mut self, track: Vec<Vec<Move>>, car_index: u64) -> Move;
+    fn take_turn(&mut self, track: Vec<Vec<Move>>, car_index: u64, lap: u64) -> Move;
 }

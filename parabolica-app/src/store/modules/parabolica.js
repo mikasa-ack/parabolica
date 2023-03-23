@@ -7,7 +7,7 @@ const MAX_CALL_WEIGHT = new BN(5_000_000_000_000).isub(BN_ONE);
 const PROOFSIZE = new BN(1_000_000);
 const wsProvider = new WsProvider('ws://127.0.0.1:9944');
 const metadata = require("@/assets/parabolica.json");
-const contract_addr = "5G6Kp8kt8t49K9C63K1nntaBkCmnC5txgYnGxot8uvpU3BUm";
+const contract_addr = "5FjENQ7yQmrvjLssihqpA3aa9mSHBGKEnxKmZ3vCorf7hh3U";
 
 const state = {
     track: null,

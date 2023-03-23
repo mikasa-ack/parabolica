@@ -25,8 +25,9 @@ mod racecar {
 
     impl Racer for Racecar {
         #[ink(message)]
-        fn take_turn(&mut self, track: Vec<Vec<Move>>, car_index: u64) -> Move {
-            if car_index % 2 == 0 {
+        fn take_turn(&mut self, track: Vec<Vec<Move>>, car_index: u64, lap: u64) -> Move {
+            let eval = car_index * lap;
+            if eval % 2 == 0 {
                 Move::FireShell
             } else {
                 Move::Accelerate

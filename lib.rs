@@ -77,7 +77,7 @@ mod parabolica {
             //[[Empty, Empty, Empty], [Empty, Empty, Empty]
             for racer in 0..self.track[curr_lap as usize].len() {
                 let track_view = self.track.clone();
-                let racer_move = self.racers[racer].racer.take_turn(track_view, racer as u64);
+                let racer_move = self.racers[racer].racer.take_turn(track_view, racer as u64, curr_lap as u64);
                 next_track[curr_lap as usize][racer] = racer_move.clone();
                 match racer_move {
                     Move::Accelerate => self.racers[racer].accelerate(),
