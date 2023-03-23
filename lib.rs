@@ -9,7 +9,6 @@ mod parabolica {
 
     #[ink(storage)]
     pub struct Parabolica {
-        // Care and its speed
         racers: Vec<CarData>,
         length: u64,
         track: Vec<Vec<Move>>,
@@ -66,6 +65,11 @@ mod parabolica {
         pub fn lap(&mut self) {
             if self.racers.len() != 3 {
                 return;
+            }
+            for racer in self.racers.iter() {
+                if racer.y >= self.length {
+                    return;
+                }
             }
             let curr_lap = self.current_lap + 1;
             self.current_lap = curr_lap;
