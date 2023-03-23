@@ -22,7 +22,7 @@ const getters = {
 };
 
 const actions = {
-    async fetchTrack({commit}) {
+    async fetchTrack({commit, state}) {
         let api = await ApiPromise.create({provider: wsProvider});
         let contract = await new ContractPromise(api, metadata, contract_addr);
         const keyring = new Keyring({ type: 'sr25519' });
@@ -38,8 +38,8 @@ const actions = {
             storageDepositLimit: undefined,
         });
         let track = await raw.output.toJSON()["ok"];
-        console.log("TRACK: ", track);
-        commit("setTrack", track);
+        console.log("TRACK: ", track, state.lap_number);
+        commit("setTrack", track.slice(0, state.lap_number+3));
     },
     async fetchLap({commit}) {
         let api = await ApiPromise.create({provider: wsProvider});

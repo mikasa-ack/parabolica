@@ -2,7 +2,7 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <h3>Racers:</h3>
-    <h4 v-for="(racer, i) in racer_positions" :orderBy="racer" :key="i">{{i+1}}: {{racer}}</h4>
+    <h4 v-for="(racer, i) in racer_positions" :key="i">{{i+1}}: {{racer}}</h4>
     <div class="outer">
       <div class="container">
         <div class="item" v-for="(lap, index) in track" :key="index">
@@ -32,8 +32,8 @@ export default {
   },
   created() {
     setInterval(() => {
-      this.$store.dispatch("parabolica/fetchTrack");
       this.$store.dispatch("parabolica/fetchLap");
+      this.$store.dispatch("parabolica/fetchTrack");
       this.$store.dispatch("parabolica/fetchRacerPositions");
     }, 2000);
   },
