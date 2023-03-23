@@ -3,10 +3,19 @@
     <h1>{{ msg }}</h1>
     <h3>Racers:</h3>
     <h4 v-for="(racer, i) in racer_positions" :orderBy="racer" :key="i">{{i+1}}: {{racer}}</h4>
-    <div  class="container">
-      <div class="item" v-for="(lap, index) in track" :key="index">
-        <div class="racer" v-for="(racer, jindex) in lap" :key="jindex">
-          <span>{{racer}}</span>
+    <div class="outer">
+      <div class="container">
+        <div class="item" v-for="(lap, index) in track" :key="index">
+          <div 
+          v-for="(racer, jindex) in lap" 
+          class="racer"
+          :class="[
+          (racer === 'FireShell') ? 'shell' : 'racer',
+          (racer === 'Accelerate') ? 'accelerate' : 'racer'
+          ]"
+          :key="jindex"
+          >
+          </div>
         </div>
       </div>
     </div>
@@ -30,17 +39,30 @@ export default {
   },
   computed: {
     ...mapGetters("parabolica", ["track", "lap_number", "racer_positions"]),
+
   },
 }
 </script>
 
 <style scoped>
+  .outer {
+    margin: auto;
+    width: 75%;
+  }
   .container {
     display: flex;
     flex-direction: row;
   }
   .racer {
-    padding: 5px;
+    padding: 7px;
     border: 1px solid lightgrey;
+  }
+
+  .shell {
+    background: darkgreen;
+  }
+
+  .accelerate {
+    background: lightgreen;
   }
 </style>
